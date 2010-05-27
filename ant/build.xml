@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<project name="antexample" default="jar">
+
+  <property file="./build.properties" />
+
+  <property name="src.dir" value="${basedir}/src" />
+  <property name="main.dir" value="${src.dir}" />
+  <property name="java.dir" value="${main.dir}/java" />
+  <property name="resources.dir" value="${main.dir}/resources" />
+  <property name="webapp.dir" value="${main.dir}/webapp" />
+  <property name="target.dir" value="${basedir}/target" />
+  <property name="classes.dir" value="${target.dir}/classes" />
+  <property name="main.class.name" value="jp.programmers.examples.MainClass" />
+
+  <path id="build.classpath">
+    <pathelement path="${classes.dir}" />
+  </path>
+
+  <target name="clean">
+    <delete dir="${target.dir}" />
+  </target>
+
+  <target name="compile">
+    <mkdir dir="${classes.dir}" />
+<!--
+    <copy todir="${classes.dir}">
+      <fileset dir="${resources.dir}" />
+    </copy>
+-->
+    <javac srcdir="${src.dir}"
+           destdir="${classes.dir}"
+           encoding="UTF-8"
+           debug="on"
+           optimize="off">
+      <classpath refid="build.classpath" />
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <mkdir dir="${target.dir}" />
+    <jar jarfile="${target.dir}/${ant.project.name}.jar">
+      <fileset dir="${classes.dir}" />
+<!--
+      <manifest><attribute name="Main-Class" value="${main.class.name}" /></manifest>
+-->
+    </jar>
+  </target>
+
+<!--
+  <target name="war" depends="compile">
+    <mkdir dir="${target.dir}/${ant.project.name}" />
+    <mkdir dir="${target.dir}/${ant.project.name}/WEB-INF/classes" />
+    <copy todir="${target.dir}/${ant.project.name}/WEB-INF/classes">
+      <fileset dir="${target.dir}/classes" />
+    </copy>
+    <jar jarfile="${target.dir}/${ant.project.name}.war">
+      <fileset dir="${target.dir}/${ant.project.name}" />
+      <fileset dir="${webapp.dir}" />
+    </jar>
+  </target>
+
+  <target name="run-main">
+    <java classname="${main.class.name}" classpathref="build.classpath" />
+  </target>
+
+  <target name="native2ascii">
+    <native2ascii dest="${classes.dir}" src="${resource.dir}" />
+  </target>
+-->
+
+</project>
