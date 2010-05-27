@@ -1,0 +1,12 @@
+<Context>
+
+  <!--
+     This valve force overwrite session cookie path, domain and secure attributes.
+     The attribute names are cookiePath, cookieDomain and cookieSecure.
+
+     <Valve className="com.redhat.jboss.support.ConfigureSessionCookieValve" cookiePath="/path" cookieDomain="some.domain.here" cookieSecure="true/false" />
+  -->
+  <Valve className="com.redhat.jboss.support.ConfigureSessionCookieValve" />
+
+</Context>
+
