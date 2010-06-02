@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+
+<project name="jboss-debug" default="jar" basedir=".">
+
+  <property file="${basedir}/build.properties" />
+
+  <property name="src.dir" value="${basedir}/src" />
+  <property name="main.dir" value="${src.dir}/main" />
+  <property name="java.dir" value="${main.dir}/java" />
+  <property name="target.dir" value="./target" />
+  <property name="classes.dir" value="${target.dir}/classes" />
+
+
+  <path id="build.classpath">
+    <pathelement path="${classes.dir}" />
+    <pathelement path="${jboss.home}/server/${jboss.server.config}/deploy/jboss-aop-jdk50.deployer/jboss-aop-jdk50.jar" />
+    <pathelement path="${jboss.home}/server/${jboss.server.config}/lib/jbossjta.jar" />
+    <pathelement path="${jboss.home}/server/${jboss.server.config}/lib/log4j.jar" />
+    <pathelement path="${jboss.home}/lib/jboss-common.jar" />
+  </path>
+
+  <target name="compile">
+    <mkdir dir="${classes.dir}" />
+    <javac srcdir="${src.dir}"
+           destdir="${classes.dir}"
+           encoding="UTF-8"
+           debug="on"
+           optimize="off">
+      <classpath refid="build.classpath" />
+    </javac>
+  </target>
+
+  <target name="jar" depends="compile">
+    <jar jarfile="${target.dir}/${ant.project.name}.jar">
+      <fileset dir="${classes.dir}" />
+    </jar>
+  </target>
+
+  <target name="deploy" depends="jar">
+    <copy file="${target.dir}/${ant.project.name}.jar" todir="${jboss.home}/server/${jboss.server.config}/lib" />
+  </target>
+
+  <target name="clean">
+    <delete dir="${target.dir}" />
+  </target>
+
+</project>

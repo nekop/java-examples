@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE aop PUBLIC
+   "-//JBoss//DTD JBOSS AOP 1.0//EN"
+   "http://labs.jboss.com/portal/jbossaop/dtd/jboss-aop_1_0.dtd">
+
+<!--
+   You can apply interceptors included in this project:
+   1. to your application (deploy with -aop.xml)
+   2. to ejb3 (edit ejb3-interceptors-aop.xml)
+  -->
+
+<aop>
+  <typedef name="seam" expr="class(org.jboss.seam.*)"/>
+  <bind pointcut="execution(* $typedef{seam}->*(..))">
+    <interceptor class="com.redhat.jboss.support.debug.aop.MethodCallLoggingInterceptor"/>
+  </bind>
+</aop>

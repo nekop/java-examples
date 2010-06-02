@@ -1,0 +1,3 @@
+<filter class="com.redhat.jboss.support.debug.log4j.DumpStackTraceFilter">
+  <param name="StringToMatch" value="Log message to match" />
+</filter>
