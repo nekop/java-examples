@@ -1,0 +1,14 @@
+connectionFactoryJNDIName = "ConnectionFactory";
+queueName = "queue/tmpQueue";
+message = "hello";
+
+context = new javax.naming.InitialContext();
+cf = context.lookup(connectionFactoryJNDIName);
+queue = context.lookup(queueName);
+conn = cf.createQueueConnection();
+session = conn.createQueueSession(false, javax.jms.Session.AUTO_ACKNOWLEDGE);
+sender = session.createSender(queue);
+sender.send(session.createTextMessage(message));
+sender.close();
+session.close();
+conn.close();
