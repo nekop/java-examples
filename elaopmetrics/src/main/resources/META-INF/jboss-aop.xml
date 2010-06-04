@@ -1,0 +1,5 @@
+<aop>
+   <bind pointcut="execution(public java.lang.Object org.jboss.el.ValueExpressionImpl->getValue(..))">
+       <interceptor class="org.jboss.injbossaop.ValueExpressionMetrics"/>
+   </bind>
+</aop>
