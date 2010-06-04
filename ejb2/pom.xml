@@ -45,6 +45,7 @@
                            ejbSpec="2.1">
                   <fileset dir="${project.build.sourceDirectory}">
                     <include name="**/*Bean.java" />
+                    <include name="**/*MDB.java" />
                   </fileset>
                   <homeinterface />
                   <remoteinterface />
