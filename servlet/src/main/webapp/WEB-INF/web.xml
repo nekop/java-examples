@@ -15,4 +15,13 @@
     <url-pattern>/hello</url-pattern>
   </servlet-mapping>
 
+  <filter>
+    <filter-name>ContentLengthFilter</filter-name>
+    <filter-class>jp.programmers.examples.ContentLengthFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ContentLengthFilter</filter-name>
+    <url-pattern>/length/*</url-pattern>
+  </filter-mapping>
+
 </web-app>
