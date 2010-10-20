@@ -18,7 +18,7 @@ public class DumpStackTraceFilter extends Filter {
        if (msg == null ||  stringToMatch == null) {
            return Filter.NEUTRAL;
        }
-       if (msg.equals(stringToMatch)) {
+       if (msg.indexOf(stringToMatch) != -1) {
            log.info("Found message: " + msg, new Exception());
        }
        return Filter.NEUTRAL;
