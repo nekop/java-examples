@@ -18,6 +18,10 @@ public class DumpStackTraceFilter extends Filter {
        if (msg == null ||  stringToMatch == null) {
            return Filter.NEUTRAL;
        }
+       // Avoid cyclic calls
+       if (event.getLoggerName().equals(DumpStackTraceFilter.class.getName())) {
+           return Filter.NEUTRAL;
+       }
        if (msg.indexOf(stringToMatch) != -1) {
            log.info("Found message: " + msg, new Exception());
        }
