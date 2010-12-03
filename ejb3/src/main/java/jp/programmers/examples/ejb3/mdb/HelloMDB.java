@@ -20,10 +20,13 @@ import javax.annotation.Resource;
 @org.jboss.annotation.ejb.PoolClass(value=org.jboss.ejb3.StrictMaxPool.class, maxSize=1)
 */
 
+
+// JBM has own DLQ processing feature, so make sure to disable DLQ processing on JCA side (useDLQ=false)
 @MessageDriven(
     activationConfig={
         @ActivationConfigProperty(propertyName="destinationType", propertyValue="javax.jms.Queue"),
-        @ActivationConfigProperty(propertyName="destination", propertyValue="queue/tmpQueue")
+        @ActivationConfigProperty(propertyName="destination", propertyValue="queue/tmpQueue"),
+        @ActivationConfigProperty(propertyName="useDLQ", propertyValue="false")
     })
 public class HelloMDB implements MessageListener {
     @Resource MessageDrivenContext context;
@@ -34,6 +37,8 @@ public class HelloMDB implements MessageListener {
             return;
         }
         String s = message.toString();
+
+        // JBM TextMessage toString() doesn't print its contents, so tweak it
         String text = null;
         if (message instanceof TextMessage) {
             try {
@@ -43,6 +48,7 @@ public class HelloMDB implements MessageListener {
                 ex.printStackTrace();
             }
         }
+
         System.out.println(s);
 
         // sleep if long value is passed
