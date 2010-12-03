@@ -1,0 +1,2 @@
+        <property name="com.arjuna.ats.jta.recovery.XAResourceRecovery.MOCK1"
+            value="com.redhat.jboss.support.debug.tx.MockXAResourceRecovery"/>
