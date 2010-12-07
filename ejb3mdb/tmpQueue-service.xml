@@ -6,3 +6,4 @@
       <depends>jboss.messaging:service=PostOffice</depends>
    </mbean>
 </server>
+
