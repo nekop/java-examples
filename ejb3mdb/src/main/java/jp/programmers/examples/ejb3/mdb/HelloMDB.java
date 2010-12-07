@@ -13,10 +13,11 @@ import javax.annotation.Resource;
 @MessageDriven(
     activationConfig={
         @ActivationConfigProperty(propertyName="destinationType", propertyValue="javax.jms.Queue"),
-        @ActivationConfigProperty(propertyName="destination", propertyValue="queue/testQueue"),
+        @ActivationConfigProperty(propertyName="destination", propertyValue="queue/tmpQueue"),
         @ActivationConfigProperty(propertyName="maxSession", propertyValue="1"),
         @ActivationConfigProperty(propertyName="useDLQ", propertyValue="false")
     })
+// TODO: This annotation package is JBoss 4, need to upgrade to JBoss 5 and declare dep in pom.xml
 @org.jboss.annotation.ejb.PoolClass(value=org.jboss.ejb3.StrictMaxPool.class, maxSize=1)
 */
 
