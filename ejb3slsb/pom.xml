@@ -8,7 +8,7 @@
   <groupId>jp.programmers.examples</groupId>
   <artifactId>example-ejb3slsb</artifactId>
   <packaging>jar</packaging>
-  <name>example-ejb3</name>
+  <name>example-ejb3slsb</name>
   <version>1.0</version>
 
   <dependencies>
