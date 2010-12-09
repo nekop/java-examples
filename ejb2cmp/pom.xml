@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>jp.programmers.examples</groupId>
+  <artifactId>example-ejb2cmp</artifactId>
+  <packaging>ejb</packaging>
+  <name>example-ejb2cmp</name>
+  <version>1.0</version>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.javaee</groupId>
+      <artifactId>jboss-javaee</artifactId>
+      <version>5.0.0.GA</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xdoclet-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>xdoclet</goal>
+            </goals>
+            <configuration>
+              <tasks>
+                <ejbdoclet destDir="${project.build.directory}/generated-sources/xdoclet"
+                           ejbSpec="2.1">
+                  <fileset dir="${project.build.sourceDirectory}">
+                    <include name="**/*Bean.java" />
+                    <include name="**/*MDB.java" />
+                  </fileset>
+                  <homeinterface />
+                  <remoteinterface />
+                  <localinterface />
+                  <localhomeinterface />
+                  <entitypk />
+                  <utilobject />
+                  <deploymentdescriptor destDir="${project.build.outputDirectory}/META-INF" />
+                  <jboss version="4.0" destDir="${project.build.outputDirectory}/META-INF" mergeDir="src/main/xdoclet" />
+                </ejbdoclet>
+              </tasks>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+  
+</project>
