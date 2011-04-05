@@ -2,7 +2,7 @@ package com.redhat.jboss.support;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 import org.apache.catalina.valves.ValveBase;
