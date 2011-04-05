@@ -19,7 +19,7 @@ public class HelloSLSBClient {
         props.put(Context.INITIAL_CONTEXT_FACTORY,
                   "org.jnp.interfaces.NamingContextFactory");
         props.put(Context.URL_PKG_PREFIXES,
-                  "jboss.naming:org.jnp.interfaces");
+                  "org.jboss.naming:org.jnp.interfaces");
         props.put(Context.PROVIDER_URL, providerUrl);
         InitialContext context = new InitialContext(props);
         HelloSLSBHome helloHome = (HelloSLSBHome)context.lookup(jndiName);
