@@ -13,12 +13,12 @@ import org.apache.catalina.connector.Request;
 import org.apache.catalina.connector.Response;
 
 /**
- * Simple Wrapper class for coyote Response.
+ * Simple Wrapper class for connector Response.
  *
  * Note that you need to override the getResponse() method and return
  * new ResponseFacade(this) if you want to intercept application
  * method calls on HttpServletResponse. Otherwise the method calls go
- * to the original coyote Response directly.
+ * to the original connector Response directly.
  */
 public class ResponseWrapper extends Response {
 
