@@ -62,6 +62,21 @@
     </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>client-eap510</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss</groupId>
+          <artifactId>jbossall-client</artifactId>
+          <version>5.1.0.EAP</version>
+          <scope>system</scope>
+          <systemPath>${jboss510.home}/client/jbossall-client.jar</systemPath>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
