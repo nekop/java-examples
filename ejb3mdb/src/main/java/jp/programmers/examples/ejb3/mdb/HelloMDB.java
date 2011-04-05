@@ -20,7 +20,7 @@ import javax.annotation.Resource;
 // TODO: This annotation package is JBoss 4, need to upgrade to JBoss 5 and declare dep in pom.xml
 @org.jboss.annotation.ejb.PoolClass(value=org.jboss.ejb3.StrictMaxPool.class, maxSize=1)
 */
-
+/* @javax.ejb.TransactionAttribute(javax.ejb.TransactionAttributeType.NOT_SUPPORTED) */
 
 // JBM has own DLQ processing feature, so make sure to disable DLQ processing on JCA side (useDLQ=false)
 @MessageDriven(
