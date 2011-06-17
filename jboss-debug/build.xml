@@ -13,10 +13,10 @@
 
   <path id="build.classpath">
     <pathelement path="${classes.dir}" />
-    <pathelement path="${jboss.home}/server/${jboss.server.config}/deploy/jboss-aop-jdk50.deployer/jboss-aop-jdk50.jar" />
-    <pathelement path="${jboss.home}/server/${jboss.server.config}/lib/jbossjta.jar" />
-    <pathelement path="${jboss.home}/server/${jboss.server.config}/lib/log4j.jar" />
-    <pathelement path="${jboss.home}/lib/jboss-common.jar" />
+    <pathelement path="${jboss.home}/lib/jboss-logging-spi.jar" />
+    <pathelement path="${jboss.home}/lib/jboss-aop.jar" />
+    <pathelement path="${jboss.home}/common/lib/jbossjts.jar" />
+    <pathelement path="${jboss.home}/common/lib/log4j.jar" />
   </path>
 
   <target name="compile">
