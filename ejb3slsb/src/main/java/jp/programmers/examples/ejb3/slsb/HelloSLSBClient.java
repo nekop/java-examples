@@ -11,7 +11,7 @@ public class HelloSLSBClient {
     public static void main(String[] args) throws Exception {
         String providerUrl = DEFAULT_PROVIDER_URL;
         if (args.length != 0) {
-            args[0] = providerUrl;
+            providerUrl = args[0];
         }
 
         String jndiName = "HelloSLSB/remote";
