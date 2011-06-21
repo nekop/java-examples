@@ -23,6 +23,7 @@ public class MockXAResource implements XAResource {
     public boolean crashInRollback = false;
     public boolean crashInCommit = false;
     public boolean exceptionInPrepare = false;
+    public boolean exceptionInEnd = false;
     public boolean exceptionInRollback = false;
     public boolean exceptionInCommit = false;
     public boolean exceptionInRecover = false;
@@ -38,6 +39,13 @@ public class MockXAResource implements XAResource {
     
     public void end(Xid xid, int flags) throws XAException {
         log.info("end('" + xid + "', " + flags + ')');
+        if (exceptionInEnd) {
+            XAException ex = new XAException(exceptionErrorCode);
+            if (logException) {
+                log.info("logException", ex);
+            }
+            throw ex;
+        }
     }
 
     public int prepare(Xid xid) throws XAException {
