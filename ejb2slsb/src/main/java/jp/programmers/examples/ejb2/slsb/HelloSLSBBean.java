@@ -1,14 +1,18 @@
 package jp.programmers.examples.ejb2.slsb;
 
-import javax.ejb.SessionBean;
 import java.rmi.RemoteException;
 import javax.ejb.EJBException;
+import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
+import javax.ejb.TimedObject;
+import javax.ejb.Timer;
 
 /**
  * @ejb.bean name="HelloSLSB" type="Stateless"
  */
-public class HelloSLSBBean implements javax.ejb.SessionBean {
+public class HelloSLSBBean implements SessionBean, TimedObject {
+
+    private SessionContext ctx;
 
     /**
      * @ejb.interface-method view-type="remote"
@@ -76,10 +80,27 @@ public class HelloSLSBBean implements javax.ejb.SessionBean {
         throw new RuntimeException();
     }
 
+    /**
+     * @ejb.interface-method view-type="remote"
+     */
+    public void initTimer() {
+        ctx.getTimerService().createTimer(0, 20 * 1000, null);
+    }
+
+    /**
+     * @ejb.interface-method view-type="remote"
+     */
+    public void ejbTimeout(Timer timer) {
+        System.out.println("HelloSLSB#ejbTimeout(Timer)");
+        System.out.println("timer=" + timer);
+    }
+
     public void ejbCreate() { }
     public void ejbActivate() throws EJBException, RemoteException { }
     public void ejbPassivate() throws EJBException, RemoteException { }
     public void ejbRemove() throws EJBException, RemoteException { }
     public void setSessionContext(SessionContext context)
-        throws EJBException, RemoteException { }
+        throws EJBException, RemoteException {
+        this.ctx = context;
+    }
 }
