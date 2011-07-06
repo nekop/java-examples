@@ -1,20 +1,22 @@
-try {
-    tm = new javax.naming.InitialContext().lookup("java:TransactionManager");
+start() {
     try {
-        // Clear existing tx
-        tm.rollback();
-    } catch (ignore) { }
-    tm.begin();
-    t = tm.getTransaction();
-    res1 = new com.redhat.jboss.support.debug.tx.MockXAResource();
-    res1.resourceId = 1;
-    res2 = new com.redhat.jboss.support.debug.tx.MockXAResource();
-    res2.resourceId = 2;
-    res2.exceptionInCommit = true;
-    res2.exceptionErrorCode = javax.transaction.xa.XAException.XAER_RMERR;
-    t.enlistResource(res1);
-    t.enlistResource(res2);
-    tm.commit();
-} catch (ex) { 
-    ex.printStackTrace();
+        tm = new javax.naming.InitialContext().lookup("java:TransactionManager");
+        try {
+            // Clear existing tx
+            tm.rollback();
+        } catch (ignore) { }
+        tm.begin();
+        t = tm.getTransaction();
+        res1 = new com.redhat.jboss.support.debug.tx.MockXAResource();
+        res1.resourceId = 1;
+        res2 = new com.redhat.jboss.support.debug.tx.MockXAResource();
+        res2.resourceId = 2;
+        res2.exceptionInCommit = true;
+        res2.exceptionErrorCode = javax.transaction.xa.XAException.XAER_RMERR;
+        t.enlistResource(res1);
+        t.enlistResource(res2);
+        tm.commit();
+    } catch (ex) {
+        ex.printStackTrace();
+    }
 }
