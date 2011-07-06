@@ -8,7 +8,7 @@ public class HelloSFSBClient {
 
     public static final String DEFAULT_PROVIDER_URL = "localhost:1099";
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String... args) throws Exception {
         String providerUrl = DEFAULT_PROVIDER_URL;
         if (args.length != 0) {
             providerUrl = args[0];
