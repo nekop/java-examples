@@ -39,7 +39,7 @@ public class SessionFixationProtectionFilter implements Filter {
     private String cookiePath = null;
     private String cookieDomain = null;
 
-	@Override
+    @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         salt = filterConfig.getInitParameter(SALT);
         if (salt == null) {
@@ -54,7 +54,7 @@ public class SessionFixationProtectionFilter implements Filter {
     }
     
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public void doFilter(ServletRequest request,
                          ServletResponse response,
                          FilterChain chain)
@@ -120,10 +120,10 @@ public class SessionFixationProtectionFilter implements Filter {
         }
     }
 
-	@Override
+    @Override
     public void destroy() { }
 
-	public static String md5(String s) {
+    public static String md5(String s) {
         try {
             MessageDigest m = MessageDigest.getInstance("MD5");
             byte[] data = s.getBytes(); 
