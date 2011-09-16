@@ -2,18 +2,19 @@ package jp.programmers.examples;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Cookie;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * This filter issues additional cookie on login, and check it until
@@ -22,6 +23,7 @@ import java.security.NoSuchAlgorithmException;
  */
 public class SessionFixationProtectionFilter implements Filter {
 
+    public static final String SALT = "SALT";
     public static final String COOKIE_NAME = "COOKIE_NAME";
     public static final String COOKIE_PATH = "COOKIE_PATH";
     public static final String COOKIE_DOMAIN = "COOKIE_DOMAIN";
@@ -29,7 +31,9 @@ public class SessionFixationProtectionFilter implements Filter {
     public static final String LOGOUT_URL = "LOGOUT_URL";
 
     public static final String DEFAULT_LOGIN_URL = "/j_security_check";
+    public static final String DEFAULT_SALT = String.valueOf(new Random().nextInt());
 
+    private String salt = null;
     private String cookieName = null;
     private String cookiePath = null;
     private String cookieDomain = null;
@@ -38,6 +42,10 @@ public class SessionFixationProtectionFilter implements Filter {
 
 	@Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        salt = filterConfig.getInitParameter(SALT);
+        if (salt == null) {
+            salt = DEFAULT_SALT;
+        }
         cookieName = filterConfig.getInitParameter(COOKIE_NAME);
         cookiePath = filterConfig.getInitParameter(COOKIE_PATH);
         cookieDomain = filterConfig.getInitParameter(COOKIE_DOMAIN);
@@ -69,7 +77,7 @@ public class SessionFixationProtectionFilter implements Filter {
             // just logged in!
             // going to set login cookie 
             HttpSession session = req.getSession(false);
-            String value = md5(user + session.getId());
+            String value = md5(salt + session.getId());
             Cookie cookie = new Cookie(cookieName, value);
             configureSessionCookie(cookie);
             res.addCookie(cookie);
@@ -80,7 +88,7 @@ public class SessionFixationProtectionFilter implements Filter {
             boolean found = false;
             for (Cookie c : req.getCookies()) {
                 if (c.getName().equals(cookieName)) {
-                    String expectedValue = md5(user + session.getId());
+                    String expectedValue = md5(salt + session.getId());
                     if (expectedValue.equals(c.getValue())) {
                         found = true;
                         break;
