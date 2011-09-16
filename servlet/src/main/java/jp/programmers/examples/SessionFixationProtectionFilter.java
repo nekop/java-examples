@@ -61,10 +61,28 @@ public class SessionFixationProtectionFilter implements Filter {
         throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse res = (HttpServletResponse)response;
+
         HttpSession session = req.getSession(false);
+        if (session == null) {
+            // no session, do nothing
+            chain.doFilter(request, response);
+            return;
+        }
         String user = req.getRemoteUser();
+        if (user == null) {
+            // already logout, just clean up
+            session.removeAttribute(cookieName);
+            chain.doFilter(request, response);
+            return;
+        }
+        String sessUser = (String)session.getAttribute(cookieName);
+        if (!user.equals(sessUser)) {
+            // switched user? remove previous info and go through
+            session.removeAttribute(cookieName);
+            sessUser = null;
+        }
         
-        if (user != null && session.getAttribute(cookieName) == null) {
+        if (sessUser == null) {
             // just logged in!
             // going to set login cookie 
             String value = md5(salt + session.getId());
@@ -72,9 +90,9 @@ public class SessionFixationProtectionFilter implements Filter {
             configureLoginCookie(cookie);
             res.addCookie(cookie);
             // mark session as this user should have a login cookie
-            session.setAttribute(cookieName, "true");
-        } else if  (user != null && session.getAttribute(cookieName) != null) {
-            // this user is logging in
+            session.setAttribute(cookieName, user);
+        } else {
+            // during login
             // going to check login cookie
             String expectedValue = md5(salt + session.getId());
             boolean found = false;
@@ -91,9 +109,6 @@ public class SessionFixationProtectionFilter implements Filter {
                 handleCookieNotFound(req, res, chain);
                 return;
             }
-        } else {
-            // this user is not logged in
-            // do nothing
         }
         chain.doFilter(request, response);
     }
