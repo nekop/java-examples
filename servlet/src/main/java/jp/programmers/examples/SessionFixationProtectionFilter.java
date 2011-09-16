@@ -20,6 +20,9 @@ import javax.servlet.http.HttpSession;
  * This filter issues additional cookie on login, and check it until
  * logout. In short, it's login time cookie. This gives us more robust
  * than single JSESSIONID cookie auth provided by a container.
+ *
+ * In clustered environment, you should have unique SALT value accross
+ * the cluster.
  */
 public class SessionFixationProtectionFilter implements Filter {
 
@@ -27,18 +30,14 @@ public class SessionFixationProtectionFilter implements Filter {
     public static final String COOKIE_NAME = "COOKIE_NAME";
     public static final String COOKIE_PATH = "COOKIE_PATH";
     public static final String COOKIE_DOMAIN = "COOKIE_DOMAIN";
-    public static final String LOGIN_URL = "LOGIN_URL";
-    public static final String LOGOUT_URL = "LOGOUT_URL";
 
-    public static final String DEFAULT_LOGIN_URL = "/j_security_check";
+    public static final String DEFAULT_COOKIE_NAME = "SessionFixationProtection";
     public static final String DEFAULT_SALT = String.valueOf(new Random().nextInt());
 
     private String salt = null;
     private String cookieName = null;
     private String cookiePath = null;
     private String cookieDomain = null;
-    private String loginURL = null;
-    private String logoutURL = null;
 
 	@Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -47,20 +46,11 @@ public class SessionFixationProtectionFilter implements Filter {
             salt = DEFAULT_SALT;
         }
         cookieName = filterConfig.getInitParameter(COOKIE_NAME);
+        if (cookieName == null) {
+            cookieName = DEFAULT_COOKIE_NAME;
+        }
         cookiePath = filterConfig.getInitParameter(COOKIE_PATH);
         cookieDomain = filterConfig.getInitParameter(COOKIE_DOMAIN);
-        loginURL = filterConfig.getInitParameter(LOGIN_URL);
-        if (loginURL == null) {
-            loginURL = DEFAULT_LOGIN_URL;
-        } 
-        logoutURL = filterConfig.getInitParameter(LOGOUT_URL);
-
-        if (cookieName == null) {
-            throw new NullPointerException("cookieName is null");
-        }
-        if (logoutURL == null) {
-            throw new NullPointerException("logoutURL is null");
-        }
     }
     
     @SuppressWarnings("unchecked")
@@ -71,24 +61,25 @@ public class SessionFixationProtectionFilter implements Filter {
         throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse res = (HttpServletResponse)response;
-        String user = getUser(req);
+        HttpSession session = req.getSession(false);
+        String user = req.getRemoteUser();
         
-        if (req.getRequestURI().endsWith(loginURL) && user != null) {
+        if (user != null && session.getAttribute(cookieName) == null) {
             // just logged in!
             // going to set login cookie 
-            HttpSession session = req.getSession(false);
             String value = md5(salt + session.getId());
             Cookie cookie = new Cookie(cookieName, value);
-            configureSessionCookie(cookie);
+            configureLoginCookie(cookie);
             res.addCookie(cookie);
-        } else if  (user != null) {
+            // mark session as this user should have a login cookie
+            session.setAttribute(cookieName, "true");
+        } else if  (user != null && session.getAttribute(cookieName) != null) {
             // this user is logging in
-            // going to check login cookie 
-            HttpSession session = req.getSession(false);
+            // going to check login cookie
+            String expectedValue = md5(salt + session.getId());
             boolean found = false;
             for (Cookie c : req.getCookies()) {
                 if (c.getName().equals(cookieName)) {
-                    String expectedValue = md5(salt + session.getId());
                     if (expectedValue.equals(c.getValue())) {
                         found = true;
                         break;
@@ -100,22 +91,11 @@ public class SessionFixationProtectionFilter implements Filter {
                 handleCookieNotFound(req, res, chain);
                 return;
             }
-        } else if (req.getRequestURI().endsWith(logoutURL)) {
-            // logout
-            // going to delete login cookie 
-            Cookie cookie = new Cookie(cookieName, "");
-            configureSessionCookie(cookie);
-            cookie.setMaxAge(0);
-            res.addCookie(cookie);
         } else {
             // this user is not logged in
             // do nothing
         }
         chain.doFilter(request, response);
-    }
-
-    protected String getUser(HttpServletRequest req) throws IOException, ServletException {
-        return req.getRemoteUser();
     }
 
     /**
@@ -130,7 +110,7 @@ public class SessionFixationProtectionFilter implements Filter {
         chain.doFilter(req, res);
     }
 
-    protected void configureSessionCookie(Cookie cookie) {
+    protected void configureLoginCookie(Cookie cookie) {
         cookie.setMaxAge(-1);
         if (cookiePath != null) {
             cookie.setPath(cookiePath);
