@@ -8,8 +8,6 @@
   <name>jab</name>
   <version>1.0</version>
   <packaging>jar</packaging>
-  
-
 
   <repositories>
     <repository>
@@ -19,11 +17,20 @@
     </repository>
   </repositories>
 
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>args4j</groupId>
       <artifactId>args4j</artifactId>
       <version>2.0.17</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.netty</groupId>
+      <artifactId>netty</artifactId>
+      <version>3.2.7.Final</version>
     </dependency>
     <dependency>
       <groupId>junit</groupId>
@@ -39,9 +46,32 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2.1</version>
+        <configuration>
+          <mainClass>jp.programmers.jab.JABMain</mainClass>
+          <jvmArgs>
+            <jvmArg>-Xmn128m</jvmArg>
+            <jvmArg>-Xms1024m</jvmArg>
+            <jvmArg>-Xmx1024m</jvmArg>
+            <jvmArg>-Xss512k</jvmArg>
+            <jvmArg>-XX:PermSize=64m</jvmArg>
+            <jvmArg>-Xverify:none</jvmArg>
+            <jvmArg>-XX:+UseConcMarkSweepGC</jvmArg>
+            <jvmArg>-XX:+TieredCompilation</jvmArg>
+            <jvmArg>-XX:+UseCompressedOops</jvmArg>
+            <jvmArg>-verbose:gc</jvmArg>
+            <jvmArg>-XX:+PrintGCDetails</jvmArg>
+            <jvmArg>-XX:+PrintGCTimeStamps</jvmArg>
+          </jvmArgs>
         </configuration>
       </plugin>
     </plugins>
