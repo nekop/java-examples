@@ -42,6 +42,7 @@ public abstract class NettyJAB extends BaseJAB {
     String scheme;
     String host;
     int port;
+    CountDownLatch numLatch;
     AtomicInteger numCount = new AtomicInteger();
 
     public void init(JABOptions options) throws Exception {
@@ -71,8 +72,7 @@ public abstract class NettyJAB extends BaseJAB {
 
     protected void fire(int num) throws Exception {
         numCount.set(0);
-        CountDownLatch numLatch = new CountDownLatch(num);
-        pipelineFactory.latch = numLatch;
+        numLatch = new CountDownLatch(num);
         // Note this loop should be concurrency, not num
         int concurrency = options.getConcurrency();
         for (int i = 0; i < concurrency; i++) {
@@ -92,22 +92,18 @@ public abstract class NettyJAB extends BaseJAB {
     }
 
     class HttpClientPipelineFactory implements ChannelPipelineFactory {
-        CountDownLatch latch;
         @Override
         public ChannelPipeline getPipeline() throws Exception {
             ChannelPipeline pipeline = Channels.pipeline();
             //pipeline.addLast("log", new LoggingHandler(InternalLogLevel.INFO));
             pipeline.addLast("codec", new HttpClientCodec());
             pipeline.addLast("inflater", new HttpContentDecompressor());
-            JABHandler jabHandler = new JABHandler();
-            jabHandler.latch = this.latch;
-            pipeline.addLast("handler", jabHandler);
+            pipeline.addLast("handler", new JABHandler());
             return pipeline;
         }
     }
 
     class JABHandler extends SimpleChannelHandler {
-        CountDownLatch latch;
         long start = 0;
         boolean chunked = false;
         boolean finish = false;
@@ -152,8 +148,8 @@ public abstract class NettyJAB extends BaseJAB {
             if (finish && !error) {
                 Recorder.instance.success(end - start);
             }
-            if (latch != null) {
-                latch.countDown();
+            if (numLatch != null) {
+                numLatch.countDown();
             }
             submit();
         }

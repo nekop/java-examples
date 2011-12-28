@@ -15,6 +15,7 @@ public class StandardJAB extends BaseJAB {
 
     ExecutorService executor;
     SimpleURLConnectionTask task;
+    CountDownLatch numLatch;
     
     public void init(JABOptions options) throws Exception {
         super.init(options);
@@ -25,8 +26,7 @@ public class StandardJAB extends BaseJAB {
 
     protected void fire(int num) throws Exception {
         // There is no API on ExecutorService to know all tasks are finished, so we use Latch
-        CountDownLatch numLatch = new CountDownLatch(num);
-        task.setLatch(numLatch);
+        numLatch = new CountDownLatch(num);
         for (int i = 0; i < num; i++) {
             executor.submit(task);
         }
@@ -40,12 +40,8 @@ public class StandardJAB extends BaseJAB {
 
     class SimpleURLConnectionTask implements Runnable {
         URL url;
-        CountDownLatch latch;
         public SimpleURLConnectionTask(URL url) {
             this.url = url;
-        }
-        public void setLatch(CountDownLatch latch) {
-            this.latch = latch;
         }
         public void run() {
             long start = System.currentTimeMillis();
@@ -79,8 +75,8 @@ public class StandardJAB extends BaseJAB {
             } finally {
                 long end = System.currentTimeMillis();
                 Recorder.instance.success(end - start);
-                if (latch != null) {
-                    latch.countDown();
+                if (numLatch != null) {
+                    numLatch.countDown();
                 }
             }
         }
