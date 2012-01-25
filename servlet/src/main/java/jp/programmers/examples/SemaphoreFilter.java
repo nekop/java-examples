@@ -16,10 +16,12 @@ public class SemaphoreFilter implements Filter {
     public static final String CONCURRENCY = "CONCURRENCY";
     public static final String FAIR = "FAIR";
     public static final String BLOCK_TIMEOUT_MILLIS = "BLOCK_TIMEOUT_MILLIS";
+    public static final String MAX_WAITERS = "MAX_WAITERS";
 
     protected FilterConfig config;
     protected Semaphore semaphore;
     protected int concurrency = 10;
+    protected int maxWaiters = 10;
     protected boolean fair;
     protected long blockTimeoutMillis = 0;
     
@@ -29,7 +31,7 @@ public class SemaphoreFilter implements Filter {
             try {
                 concurrency = Integer.parseInt(config.getInitParameter(CONCURRENCY));
             } catch (NumberFormatException ex) {
-                // ignore, todo logging
+                config.getServletContext().log(this.getClass().getSimpleName() + " Invalid CONCURRENCY value", ex);
             }
         }
         if (config.getInitParameter(FAIR) != null) {
@@ -39,7 +41,14 @@ public class SemaphoreFilter implements Filter {
             try {
                 blockTimeoutMillis = Long.parseLong(config.getInitParameter(BLOCK_TIMEOUT_MILLIS));
             } catch (NumberFormatException ex) {
-                // ignore, todo logging
+                config.getServletContext().log(this.getClass().getSimpleName() + " Invalid BLOCK_TIMEOUT_MILLIS value", ex);
+            }
+        }
+        if (config.getInitParameter(MAX_WAITERS) != null) {
+            try {
+                maxWaiters = Integer.parseInt(config.getInitParameter(MAX_WAITERS));
+            } catch (NumberFormatException ex) {
+                config.getServletContext().log(this.getClass().getSimpleName() + " Invalid MAX_WAITERS value", ex);
             }
         }
         this.semaphore = new Semaphore(concurrency, fair);
@@ -54,7 +63,8 @@ public class SemaphoreFilter implements Filter {
         if (controlConcurrency(request, response)) {
             boolean shouldRelease = true;
             try {
-                if (!semaphore.tryAcquire(blockTimeoutMillis, TimeUnit.MILLISECONDS)) {
+                if (semaphore.getQueueLength() >= maxWaiters ||
+                    !semaphore.tryAcquire(blockTimeoutMillis, TimeUnit.MILLISECONDS)) {
                     shouldRelease = false;
                     permitDenied(request, response);
                     return;
@@ -93,7 +103,7 @@ public class SemaphoreFilter implements Filter {
         if (response instanceof HttpServletResponse) {
             ((HttpServletResponse)response).sendError(503);
         } else {
-            // todo, what should we do?
+            throw new ServletException("Server is busy");
         }
     }
 
