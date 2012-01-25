@@ -13,12 +13,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
-/**
- * A deferred response wrapper.
- *
- * Do not call getWriter() before setContentLength(). Otherwise
- * the subsequent setContentLength() call will simply be ignored.
- */
 public class ContentLengthResponseWrapper extends HttpServletResponseWrapper {
 
     private HttpServletResponse response;
@@ -72,7 +66,6 @@ public class ContentLengthResponseWrapper extends HttpServletResponseWrapper {
             } catch (IOException ignore) { }
             byte[] result = bout.toByteArray();
             int length = result.length;
-            System.out.println("length=" + length);
             response.setContentLength(length);
             response.getOutputStream().write(result);
         } else if (isWriter) {
@@ -84,7 +77,6 @@ public class ContentLengthResponseWrapper extends HttpServletResponseWrapper {
             }
             int length = s.getBytes(charset).length;
             response.setContentLength(length);
-            System.out.println("length=" + length);
             response.getWriter().write(s);
         }
     }
