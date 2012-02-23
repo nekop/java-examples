@@ -5,17 +5,35 @@
   <property file="./build.properties" />
 
   <property name="src.dir" value="${basedir}/src" />
-  <property name="main.dir" value="${src.dir}" />
+  <property name="main.dir" value="${src.dir}/main" />
   <property name="java.dir" value="${main.dir}/java" />
   <property name="resources.dir" value="${main.dir}/resources" />
   <property name="webapp.dir" value="${main.dir}/webapp" />
+  <property name="test.dir" value="${src.dir}/test" />
+  <property name="test.java.dir" value="${test.dir}/java" />
+  <property name="test.resources.dir" value="${test.dir}/resources" />
   <property name="target.dir" value="${basedir}/target" />
   <property name="classes.dir" value="${target.dir}/classes" />
+  <property name="test-classes.dir" value="${target.dir}/test-classes" />
+  <property name="test-report.dir" value="${target.dir}/test-report" />
   <property name="main.class.name" value="jp.programmers.examples.MainClass" />
 
+  <property name="lib.dir" value="${basedir}/lib" />
+
   <path id="build.classpath">
+    <fileset dir="${lib.dir}">
+      <include name="*.jar"/>
+    </fileset>
     <pathelement path="${classes.dir}" />
   </path>
+
+  <target name="_init">
+    <mkdir dir="${lib.dir}" />
+    <mkdir dir="${java.dir}" />
+    <mkdir dir="${resources.dir}" />
+    <mkdir dir="${test.java.dir}" />
+    <mkdir dir="${test.resources.dir}" />
+  </target>
 
   <target name="clean">
     <delete dir="${target.dir}" />
@@ -23,16 +41,15 @@
 
   <target name="compile">
     <mkdir dir="${classes.dir}" />
-<!--
     <copy todir="${classes.dir}">
       <fileset dir="${resources.dir}" />
     </copy>
--->
-    <javac srcdir="${src.dir}"
+    <javac srcdir="${java.dir}"
            destdir="${classes.dir}"
            encoding="UTF-8"
            source="1.5"
            target="1.5"
+           includeAntRuntime="no"
            debug="on"
            optimize="off">
       <classpath refid="build.classpath" />
@@ -49,7 +66,6 @@
     </jar>
   </target>
 
-<!--
   <target name="war" depends="compile">
     <mkdir dir="${target.dir}/${ant.project.name}" />
     <mkdir dir="${target.dir}/${ant.project.name}/WEB-INF/classes" />
@@ -69,6 +85,5 @@
   <target name="native2ascii">
     <native2ascii dest="${classes.dir}" src="${resource.dir}" />
   </target>
--->
 
 </project>
