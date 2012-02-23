@@ -28,6 +28,10 @@
         <configuration>
           <source>1.5</source>
           <target>1.5</target>
+          <excludes>
+            <exclude>**/clustered/*.java</exclude>
+            <exclude>**/iiop/*.java</exclude>
+          </excludes>
         </configuration>
       </plugin>
     </plugins>
@@ -35,16 +39,44 @@
 
   <profiles>
     <profile>
-      <id>client-eap510</id>
+      <id>client-jboss5</id>
       <dependencies>
         <dependency>
           <groupId>org.jboss</groupId>
           <artifactId>jbossall-client</artifactId>
-          <version>5.1.0.EAP</version>
+          <version>5</version>
           <scope>system</scope>
-          <systemPath>${jboss510.home}/client/jbossall-client.jar</systemPath>
+          <systemPath>${jboss5.home}/client/jbossall-client.jar</systemPath>
         </dependency>
       </dependencies>
+    </profile>
+    <profile>
+      <id>jboss5</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.ejb3</groupId>
+          <artifactId>jboss-ejb3-ext-api</artifactId>
+          <version>5</version>
+          <scope>system</scope>
+          <systemPath>${jboss5.home}/common/lib/jboss-ejb3-ext-api.jar</systemPath>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <configuration>
+              <source>1.5</source>
+              <target>1.5</target>
+              <!-- include clustered/iiop -->
+              <excludes>
+                <exclude/>
+              </excludes>
+              <excludes/>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 

@@ -41,7 +41,7 @@
 
   <profiles>
     <profile>
-      <id>eap510</id>
+      <id>jboss5</id>
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
@@ -49,16 +49,16 @@
         <dependency>
           <groupId>org.jboss</groupId>
           <artifactId>mail-ra</artifactId>
-          <version>5.1.0.EAP</version>
+          <version>5</version>
           <scope>system</scope>
-          <systemPath>${jboss510.home}/server/${jboss510.profile}/deploy/mail-ra.rar/mail-ra.jar</systemPath>
+          <systemPath>${jboss5.home}/server/${jboss5.profile}/deploy/mail-ra.rar/mail-ra.jar</systemPath>
         </dependency>
         <dependency>
           <groupId>org.jboss</groupId>
           <artifactId>jboss-ejb3-ext-api</artifactId>
-          <version>5.1.0.EAP</version>
+          <version>5</version>
           <scope>system</scope>
-          <systemPath>${jboss510.home}/common/lib/jboss-ejb3-ext-api.jar</systemPath>
+          <systemPath>${jboss5.home}/common/lib/jboss-ejb3-ext-api.jar</systemPath>
         </dependency>
       </dependencies>
     </profile>

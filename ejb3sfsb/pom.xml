@@ -35,14 +35,14 @@
 
   <profiles>
     <profile>
-      <id>client-eap510</id>
+      <id>client-jboss5</id>
       <dependencies>
         <dependency>
           <groupId>org.jboss</groupId>
           <artifactId>jbossall-client</artifactId>
-          <version>5.1.0.EAP</version>
+          <version>5</version>
           <scope>system</scope>
-          <systemPath>${jboss510.home}/client/jbossall-client.jar</systemPath>
+          <systemPath>${jboss5.home}/client/jbossall-client.jar</systemPath>
         </dependency>
       </dependencies>
     </profile>
