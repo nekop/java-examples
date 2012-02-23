@@ -41,6 +41,10 @@ public abstract class StudentEntityBean implements EntityBean {
      * @ejb.persistence column-name="NAME"
      */
     public abstract String getName();
+
+    /**
+     * @ejb.interface-method
+     */
     public abstract void setName(String name);
 
     // EntityBean implementation ------------------------------------
