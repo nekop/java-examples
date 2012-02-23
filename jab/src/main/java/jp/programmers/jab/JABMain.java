@@ -5,7 +5,7 @@ import org.kohsuke.args4j.CmdLineParser;
 
 public class JABMain {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String... args) throws Exception {
         JABOptions options = new JABOptions();
         CmdLineParser parser = new CmdLineParser(options);
         parser.parseArgument(args);
