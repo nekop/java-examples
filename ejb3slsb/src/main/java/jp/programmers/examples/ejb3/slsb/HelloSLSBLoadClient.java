@@ -3,9 +3,6 @@ package jp.programmers.examples.ejb3.slsb;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.Properties;
-import javax.naming.Context;
-import javax.naming.InitialContext;
 
 public class HelloSLSBLoadClient {
 
