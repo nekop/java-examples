@@ -1,16 +1,15 @@
-package jp.programmers.examples.ejb3.slsb;
+package jp.programmers.examples.ejb3.slsb.iiop;
 
-import javax.ejb.Local;
-import javax.ejb.Remote;
+import javax.ejb.RemoteHome;
 import javax.ejb.Stateless;
-import javax.ejb.Timeout;
-import javax.ejb.Timer;
 import javax.ejb.SessionContext;
 import javax.annotation.Resource;
+import org.jboss.ejb3.annotation.IIOP;
 
-@Remote
 @Stateless
-public class HelloSLSB implements Hello {
+@RemoteHome(HelloHome.class)
+@IIOP(interfaceRepositorySupported=false)
+public class HelloIIOP {
 
     @Resource
     SessionContext ctx;
@@ -24,16 +23,6 @@ public class HelloSLSB implements Hello {
         System.out.println("HelloSLSB#hello(String)");
         System.out.println("name=" + name);
         return "Hello " + name;
-    }
-
-    @Timeout
-    public void ejbTimeout(Timer timer) {
-        System.out.println("HelloSLSB#ejbTimeout(Timer)");
-        System.out.println("timer=" + timer);
-    }
-
-    public void initTimer() {
-        ctx.getTimerService().createTimer(0, 20 * 1000, null);
     }
 
     public void exception() {

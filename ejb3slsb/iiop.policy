@@ -1,0 +1,8 @@
+grant codeBase "file:target/classes/-" {
+   permission java.security.AllPermission;
+};
+
+
+grant codeBase "http://127.0.0.1:8083/-" {
+   permission java.security.AllPermission;
+};

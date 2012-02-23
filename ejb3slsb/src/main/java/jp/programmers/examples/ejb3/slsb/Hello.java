@@ -8,4 +8,5 @@ public interface Hello {
     public void ejbTimeout(Timer timer);
     public void initTimer();
     public void exception();
+    public void sleep(long msec);
 }
