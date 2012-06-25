@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server>
+  <mbean code="jp.programmers.jboss.hello.Hello" name="example:service=Hello" />
+</server>
