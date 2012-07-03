@@ -24,7 +24,6 @@
   </dependencies>
 
   <build>
-    <finalName>${project.artifactId}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -48,6 +47,7 @@
   
   <modules>
     <module>ejb</module>
+    <module>appclient</module>
     <module>web</module>
     <module>ear</module>
   </modules>

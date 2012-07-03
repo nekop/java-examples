@@ -29,6 +29,12 @@
       <version>1.0</version>
       <type>war</type>
     </dependency>
+    <dependency>
+      <groupId>jp.programmers</groupId>
+      <artifactId>as7-ear-appclient</artifactId>
+      <version>1.0</version>
+      <type>app-client</type>
+    </dependency>
   </dependencies>
 
   <build>
@@ -49,6 +55,10 @@
               <groupId>jp.programmers</groupId>
               <artifactId>as7-ear-ejb</artifactId>
             </ejbModule>
+            <appClientModule>
+              <groupId>jp.programmers</groupId>
+              <artifactId>as7-ear-appclient</artifactId>
+            </appClientModule>
           </modules>
         </configuration>
       </plugin>

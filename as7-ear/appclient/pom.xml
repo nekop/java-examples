@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>jp.programmers</groupId>
+  <artifactId>as7-ear-appclient</artifactId>
+  <name>as7-ear-appclient</name>
+  <version>1.0</version>
+  <packaging>app-client</packaging>
+
+  <parent>
+    <groupId>jp.programmers</groupId>
+    <artifactId>as7-ear</artifactId>
+    <version>1.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>jp.programmers</groupId>
+      <artifactId>as7-ear-ejb</artifactId>
+      <version>1.0</version>
+      <type>ejb</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-acr-plugin</artifactId>
+        <version>1.0</version>
+        <extensions>true</extensions>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>jp.programmers.as7.examples.HelloClient</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
