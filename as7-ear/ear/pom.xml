@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>jp.programmers</groupId>
+  <artifactId>as7-ear-ear</artifactId>
+  <name>as7-ear-ear</name>
+  <version>1.0</version>
+  <packaging>ear</packaging>
+
+  <parent>
+    <groupId>jp.programmers</groupId>
+    <artifactId>as7-ear</artifactId>
+    <version>1.0</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
+  <dependencies>
+    <dependency>
+      <groupId>jp.programmers</groupId>
+      <artifactId>as7-ear-ejb</artifactId>
+      <version>1.0</version>
+      <type>ejb</type>
+    </dependency>
+    <dependency>
+      <groupId>jp.programmers</groupId>
+      <artifactId>as7-ear-web</artifactId>
+      <version>1.0</version>
+      <type>war</type>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-ear-plugin</artifactId>
+        <version>2.7</version>
+        <configuration>
+          <finalName>as7-ear</finalName>
+          <version>6</version>
+          <modules>
+            <webModule>
+              <groupId>jp.programmers</groupId>
+              <artifactId>as7-ear-web</artifactId>
+            </webModule>
+            <ejbModule>
+              <groupId>jp.programmers</groupId>
+              <artifactId>as7-ear-ejb</artifactId>
+            </ejbModule>
+          </modules>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jboss.as.plugins</groupId>
+        <artifactId>jboss-as-maven-plugin</artifactId>
+        <version>7.1.1.Final</version>
+        <configuration>
+          <filename>as7-ear</filename>
+          <skip>false</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.1</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  
+</project>
+
