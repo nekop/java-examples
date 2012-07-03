@@ -16,6 +16,7 @@ public class StartupBean {
     public void init() {
         System.out.println("StatefulBean.init()");
         sfsb.test();
+        sfsb.remove();
     }
 
 }
