@@ -74,7 +74,7 @@ public class EchoServer {
         AcceptingChannel<? extends ConnectedStreamChannel> server =
             worker.createStreamServer(address,
                                       acceptListener,
-                                      OptionMap.create(Options.REUSE_ADDRESSES, Boolean.TRUE));
+                                      optionMap);
 
         server.resumeAccepts();
 
