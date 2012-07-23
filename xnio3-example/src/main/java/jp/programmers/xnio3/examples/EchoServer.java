@@ -18,48 +18,53 @@ public class EchoServer {
     static String SERVER_HOST = "127.0.0.1";
     static int SERVER_PORT = 54565;
 
-    public static void main(String[] args) throws Exception {
-        ChannelListener<ConnectedStreamChannel> serverListener = new ChannelListener<ConnectedStreamChannel>() {
-            String lastRead = "";
-            public void handleEvent(final ConnectedStreamChannel channel) {
-                System.out.println("opened channel: " + channel);
-                channel.getCloseSetter().set(new ChannelListener<ConnectedStreamChannel>() {
-                        public void handleEvent(final ConnectedStreamChannel channel) {
-                            System.out.println("closed channel: " + channel);
-                        }
-                    });
-                channel.getReadSetter().set(new ChannelListener<ConnectedStreamChannel>() {
-                        public void handleEvent(final ConnectedStreamChannel channel) {
-                            try {
-                                ByteBuffer buffer = ByteBuffer.allocate(1024);
-                                channel.read(buffer);
-                                buffer.clear();
-                                byte[] bytes = new byte[buffer.capacity()];
-                                buffer.get(bytes);
-                                lastRead = new String(bytes, "UTF-8");
-                                System.out.println("Read: " + lastRead);
-                                channel.resumeWrites();
-                            } catch (Throwable t) {
-                                throw new RuntimeException("read error", t);
-                            }
-                        }
-                    });
-                channel.getWriteSetter().set(new ChannelListener<ConnectedStreamChannel>() {
-                        public void handleEvent(final ConnectedStreamChannel channel) {
-                            try {
-                                System.out.println("Write: " + lastRead);
-                                ByteBuffer buffer = ByteBuffer.wrap(lastRead.getBytes("UTF-8"));
-                                channel.write(buffer);
-                                channel.close();
-                            } catch (Throwable t) {
-                                throw new RuntimeException("write error", t);
-                            }
-                        }
-                    });
-                channel.resumeReads();
-            }
-        };
+    static class EchoServerListener implements ChannelListener<ConnectedStreamChannel> {
+        String lastRead = "";
+        public void handleEvent(final ConnectedStreamChannel channel) {
+            System.out.println("opened channel: " + channel);
+            channel.getReadSetter().set(new ReadListener());
+            channel.getWriteSetter().set(new WriteListener());
+            channel.getCloseSetter().set(new CloseListener());
+            channel.resumeReads();
+        }
 
+        class ReadListener implements ChannelListener<ConnectedStreamChannel> {
+            ByteBuffer buffer = ByteBuffer.allocate(1024);
+            public void handleEvent(final ConnectedStreamChannel channel) {
+                try {
+                    channel.read(buffer);
+                    buffer.flip();
+                    byte[] bytes = new byte[buffer.limit()];
+                    buffer.get(bytes);
+                    buffer.clear();
+                    lastRead = new String(bytes, "UTF-8");
+                    System.out.println("Read: " + lastRead);
+                    channel.resumeWrites();
+                } catch (Throwable t) {
+                    throw new RuntimeException("read error", t);
+                }
+            }
+        }
+        class WriteListener implements ChannelListener<ConnectedStreamChannel> {
+            public void handleEvent(final ConnectedStreamChannel channel) {
+                try {
+                    System.out.println("Write: " + lastRead);
+                    ByteBuffer buffer = ByteBuffer.wrap(lastRead.getBytes("UTF-8"));
+                    channel.write(buffer);
+                    channel.close();
+                } catch (Throwable t) {
+                    throw new RuntimeException("write error", t);
+                }
+            }
+        }
+        class CloseListener implements ChannelListener<ConnectedStreamChannel> {
+            public void handleEvent(final ConnectedStreamChannel channel) {
+                System.out.println("closed channel: " + channel);
+            }
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
         Xnio xnio =
             Xnio.getInstance();
         XnioWorker worker =
@@ -67,7 +72,7 @@ public class EchoServer {
         InetSocketAddress address =
             new InetSocketAddress(Inet4Address.getByName(SERVER_HOST), SERVER_PORT);
         ChannelListener<? super AcceptingChannel<ConnectedStreamChannel>> acceptListener =
-            ChannelListeners.<ConnectedStreamChannel>openListenerAdapter(serverListener);
+            ChannelListeners.<ConnectedStreamChannel>openListenerAdapter(new EchoServerListener());
         OptionMap optionMap =
             OptionMap.create(Options.REUSE_ADDRESSES, Boolean.TRUE);
 
