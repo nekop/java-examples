@@ -21,7 +21,7 @@ public class EchoServer {
     static class EchoServerListener implements ChannelListener<ConnectedStreamChannel> {
         String lastRead = "";
         public void handleEvent(final ConnectedStreamChannel channel) {
-            System.out.println("opened channel: " + channel);
+            log("opened channel: " + channel);
             channel.getReadSetter().set(new ReadListener());
             channel.getWriteSetter().set(new WriteListener());
             channel.getCloseSetter().set(new CloseListener());
@@ -38,7 +38,7 @@ public class EchoServer {
                     buffer.get(bytes);
                     buffer.clear();
                     lastRead = new String(bytes, "UTF-8");
-                    System.out.println("Read: " + lastRead);
+                    log("Read: " + lastRead);
                     channel.resumeWrites();
                 } catch (Throwable t) {
                     throw new RuntimeException("read error", t);
@@ -48,7 +48,7 @@ public class EchoServer {
         class WriteListener implements ChannelListener<ConnectedStreamChannel> {
             public void handleEvent(final ConnectedStreamChannel channel) {
                 try {
-                    System.out.println("Write: " + lastRead);
+                    log("Write: " + lastRead);
                     ByteBuffer buffer = ByteBuffer.wrap(lastRead.getBytes("UTF-8"));
                     channel.write(buffer);
                     channel.close();
@@ -59,9 +59,13 @@ public class EchoServer {
         }
         class CloseListener implements ChannelListener<ConnectedStreamChannel> {
             public void handleEvent(final ConnectedStreamChannel channel) {
-                System.out.println("closed channel: " + channel);
+                log("closed channel: " + channel);
             }
         }
+    }
+
+    static void log(String message) {
+        System.out.println("Thread: " + Thread.currentThread() + ", " + message);
     }
 
     public static void main(String[] args) throws Exception {
