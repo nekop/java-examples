@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<jboss version="5.0"
+       xmlns="http://www.jboss.com/xml/ns/javaee"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.jboss.com/xml/ns/javaee
+                           http://www.jboss.org/j2ee/schema/jboss_5_0.xsd">
+  <!--
+  <enterprise-beans>
+    <session>
+      <ejb-name>HelloSLSB</ejb-name>
+    </session>
+  </enterprise-beans>
+  -->
+</jboss>
