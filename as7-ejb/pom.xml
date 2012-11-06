@@ -87,7 +87,7 @@
 
   <profiles>
     <profile>
-      <id>client-as7</id>
+      <id>client-deps</id>
       <dependencies>
         <dependency>
           <groupId>org.jboss.spec.javax.ejb</groupId>
@@ -130,6 +130,9 @@
           <scope>runtime</scope>
         </dependency>
       </dependencies>
+    </profile>
+    <profile>
+      <id>client</id>
       <build>
         <plugins>
           <plugin>
@@ -139,17 +142,50 @@
             <executions>
               <execution>
                 <goals>
-                  <goal>java</goal>
+                  <goal>exec</goal>
                 </goals>
               </execution>
             </executions>
             <configuration>
-              <mainClass>jp.programmers.examples.ejb3.slsb.HelloSLSBClient</mainClass>
-<!--
+              <executable>java</executable>
               <arguments>
+                <argument>-Djboss.ejb.client.properties.file.path=target/classes/nonclustered-jboss-ejb-client.properties</argument>
+                <argument>-Djava.util.logging.config.file=target/classes/finest-logging.properties</argument>
+                <argument>-classpath</argument>
+                <classpath />
+                <argument>jp.programmers.examples.ejb3.slsb.HelloSLSBClient</argument>
+                <argument>HelloSLSB</argument>
+              </arguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>client-clustered</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>${version.exec.plugin}</version>
+            <executions>
+              <execution>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <executable>java</executable>
+              <arguments>
+                <argument>-Djboss.ejb.client.properties.file.path=target/classes/clustered-jboss-ejb-client.properties</argument>
+                <argument>-Djava.util.logging.config.file=target/classes/finest-logging.properties</argument>
+                <argument>-classpath</argument>
+                <classpath />
+                <argument>jp.programmers.examples.ejb3.slsb.HelloSLSBClient</argument>
                 <argument>ClusteredHelloSLSB</argument>
               </arguments>
--->
             </configuration>
           </plugin>
         </plugins>
