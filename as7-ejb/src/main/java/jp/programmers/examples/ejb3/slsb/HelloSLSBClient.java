@@ -19,9 +19,6 @@ public class HelloSLSBClient {
         Properties props = new Properties();
         props.put(Context.URL_PKG_PREFIXES, "org.jboss.ejb.client.naming");
         InitialContext context = new InitialContext(props);
-        java.util.logging.Logger.getLogger(HelloSLSBClient.class.getName()).fine("info");
-        java.util.logging.Logger.getLogger(HelloSLSBClient.class.getName()).fine("fine");
-        java.util.logging.Logger.getLogger(HelloSLSBClient.class.getName()).severe("severe");
         Hello hello = (Hello)context.lookup(jndiName);
         hello.hello();
     }
