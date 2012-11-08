@@ -43,6 +43,7 @@ public class HelloSLSB implements Hello {
     }
 
     public void sleep(long msec) {
+        System.out.println(simpleName + "#sleep()");
         try {
             Thread.sleep(msec);
         } catch (InterruptedException ignore) { }
