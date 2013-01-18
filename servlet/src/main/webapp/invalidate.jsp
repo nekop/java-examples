@@ -1,0 +1,4 @@
+<%
+session.invalidate();
+%>
+ok

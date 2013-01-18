@@ -1,0 +1,6 @@
+<jboss-web>
+  <replication-config>
+    <replication-trigger>SET_AND_NON_PRIMITIVE_GET</replication-trigger>
+    <replication-granularity>ATTRIBUTE</replication-granularity>
+  </replication-config>
+</jboss-web>

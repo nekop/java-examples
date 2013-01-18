@@ -6,6 +6,13 @@
    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
    version="2.5">
 
+  <distributable />
+
+  <listener>
+    <listener-class>jp.programmers.examples.DebugSessionListener</listener-class>
+  </listener>
+
+
   <servlet>
     <servlet-name>Hello Servlet</servlet-name>
     <servlet-class>jp.programmers.examples.HelloServlet</servlet-class>
@@ -23,5 +30,9 @@
     <filter-name>ContentLengthFilter</filter-name>
     <url-pattern>/length/*</url-pattern>
   </filter-mapping>
+
+  <session-config>
+    <session-timeout>1</session-timeout>
+  </session-config>
 
 </web-app>
