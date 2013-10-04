@@ -1,0 +1,11 @@
+<jboss-deployment-structure>
+  <deployment>
+    <dependencies>
+      <module name="org.jboss.as.server" />
+      <module name="org.jboss.msc" />
+      <module name="org.jboss.jboss-transaction-spi" />
+      <module name="org.jboss.jts" />
+      <module name="org.jboss.as.transactions" />
+    </dependencies>
+  </deployment>
+</jboss-deployment-structure>
