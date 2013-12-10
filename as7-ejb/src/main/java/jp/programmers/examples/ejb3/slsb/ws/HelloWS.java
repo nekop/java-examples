@@ -15,8 +15,9 @@ import jp.programmers.examples.ejb3.slsb.HelloSLSB;
 public class HelloWS extends HelloSLSB implements HelloEndpoint {
 
     @WebMethod
-    public String hello() {
-        return super.hello();
+    @Override
+    public String hello(String name) {
+        return super.hello(name);
     }
 
 }

@@ -12,13 +12,15 @@ public class HelloIIOP {
     @Resource
     SessionContext ctx;
 
+    String simpleName = getClass().getSimpleName();
+
     public String hello() {
-        System.out.println("HelloSLSB#hello()");
+        System.out.println(simpleName + "#hello()");
         return this.hello("world");
     }
 
     public String hello(String name) {
-        System.out.println("HelloSLSB#hello(String)");
+        System.out.println(simpleName + "#hello(String)");
         System.out.println("name=" + name);
         return "Hello " + name;
     }
@@ -28,6 +30,7 @@ public class HelloIIOP {
     }
 
     public void sleep(long msec) {
+        System.out.println(simpleName + "#sleep()");
         try {
             Thread.sleep(msec);
         } catch (InterruptedException ignore) { }

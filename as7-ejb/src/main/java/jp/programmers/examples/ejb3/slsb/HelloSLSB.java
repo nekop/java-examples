@@ -17,11 +17,13 @@ public class HelloSLSB implements Hello {
 
     String simpleName = getClass().getSimpleName();
 
+    @Override
     public String hello() {
         System.out.println(simpleName + "#hello()");
         return this.hello("world");
     }
 
+    @Override
     public String hello(String name) {
         System.out.println(simpleName + "#hello(String)");
         System.out.println("name=" + name);
@@ -29,19 +31,23 @@ public class HelloSLSB implements Hello {
     }
 
     @Timeout
+    @Override
     public void ejbTimeout(Timer timer) {
         System.out.println(simpleName + "#ejbTimeout(Timer)");
         System.out.println("timer=" + timer);
     }
 
+    @Override
     public void initTimer() {
         ctx.getTimerService().createTimer(0, 20 * 1000, null);
     }
 
+    @Override
     public void exception() {
         throw new RuntimeException();
     }
 
+    @Override
     public void sleep(long msec) {
         System.out.println(simpleName + "#sleep()");
         try {
