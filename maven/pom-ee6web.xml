@@ -4,6 +4,16 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+  <!--
+      Java EE 6 minimal pom.xml, works with JBoss EAP 6
+
+      [Summary]
+      Additional Repository: JBoss Public
+      Compile Deps: Java EE 6 Web Profile
+      Test Deps: JUnit, Arquillian and ShrinkWrap Resolver
+      Profiles: arq-managed, arq-remote
+  -->
+
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.nekop</groupId>
   <artifactId>ee6web</artifactId>
