@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.github.nekop</groupId>
+  <artifactId>ee6web</artifactId>
+  <packaging>war</packaging>
+  <name>ee6web</name>
+  <version>1.0</version>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <version.org.jboss.spec.jboss-javaee-web-6.0>3.0.2.Final</version.org.jboss.spec.jboss-javaee-web-6.0>
+
+    <version.org.jboss.arquillian.arquillian-bom>1.1.4.Final</version.org.jboss.arquillian.arquillian-bom>
+    <version.org.jboss.as.jboss-as-arquillian-container-managed>7.2.0.Final</version.org.jboss.as.jboss-as-arquillian-container-managed>
+    <version.org.jboss.as.jboss-as-arquillian-container-remote>7.2.0.Final</version.org.jboss.as.jboss-as-arquillian-container-remote>
+    <version.junit>4.11</version.junit>
+    <version.maven-surefire-plugin>2.17</version.maven-surefire-plugin>
+    <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
+    <version.maven-war-plugin>2.4</version.maven-war-plugin>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>${version.org.jboss.arquillian.arquillian-bom}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <!-- prune API jar, do NOT use for real projects/testing
+    <dependency>
+      <groupId>javax</groupId>
+      <artifactId>javaee-api</artifactId>
+      <version>6.0</version>
+      <scope>provided</scope>
+    </dependency>
+    -->
+    <!-- Java EE 6 API jars. It's actually a bom, but we can use it as a depchain -->
+    <dependency>
+      <groupId>org.jboss.spec</groupId>
+      <artifactId>jboss-javaee-web-6.0</artifactId>
+      <version>${version.org.jboss.spec.jboss-javaee-web-6.0}</version>
+      <scope>provided</scope>
+      <type>pom</type>
+    </dependency>
+
+    <!-- test deps -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${version.junit}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-container</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-depchain</artifactId>
+      <type>pom</type>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <finalName>${project.artifactId}</finalName>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${version.maven-compiler-plugin}</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${version.maven-surefire-plugin}</version>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${version.maven-war-plugin}</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>arq-managed</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.as</groupId>
+          <artifactId>jboss-as-arquillian-container-managed</artifactId>
+          <version>${version.org.jboss.as.jboss-as-arquillian-container-managed}</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <profile>
+      <id>arq-remote</id>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.as</groupId>
+          <artifactId>jboss-as-arquillian-container-remote</artifactId>
+          <version>${version.org.jboss.as.jboss-as-arquillian-container-remote}</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
+
+</project>
