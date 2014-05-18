@@ -5,7 +5,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <!--
-      Java EE 7 minimal pom.xml, works with WildFly 8.1
+      Java EE 7 minimal pom.xml, works with WildFly 8.1.
+
+      Put your source code, config files, boot the application server and run:
+      $ mvn clean install -Parq-remote
 
       [Summary]
       Additional Repository: JBoss Public
