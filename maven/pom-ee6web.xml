@@ -81,10 +81,11 @@
   </dependencyManagement>
 
   <dependencies>
-    <!-- prune API jar, do NOT use for real projects/testing
+    <!-- This Java EE 6 API jar is crippled, do NOT use for real projects/testing.
+         Fixed in Java EE 7.
     <dependency>
       <groupId>javax</groupId>
-      <artifactId>javaee-api</artifactId>
+      <artifactId>javaee-web-api</artifactId>
       <version>6.0</version>
       <scope>provided</scope>
     </dependency>
