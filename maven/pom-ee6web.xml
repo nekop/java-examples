@@ -30,7 +30,7 @@
 
     <version.org.jboss.spec.jboss-javaee-web-6.0>3.0.2.Final</version.org.jboss.spec.jboss-javaee-web-6.0>
 
-    <version.org.jboss.arquillian.arquillian-bom>1.1.4.Final</version.org.jboss.arquillian.arquillian-bom>
+    <version.org.jboss.arquillian.arquillian-bom>1.1.5.Final</version.org.jboss.arquillian.arquillian-bom>
     <version.org.jboss.as.jboss-as-arquillian-container-managed>7.2.0.Final</version.org.jboss.as.jboss-as-arquillian-container-managed>
     <version.org.jboss.as.jboss-as-arquillian-container-remote>7.2.0.Final</version.org.jboss.as.jboss-as-arquillian-container-remote>
     <version.junit>4.11</version.junit>

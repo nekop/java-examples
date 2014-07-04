@@ -28,7 +28,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <version.org.jboss.arquillian.arquillian-bom>1.1.4.Final</version.org.jboss.arquillian.arquillian-bom>
+    <version.org.jboss.arquillian.arquillian-bom>1.1.5.Final</version.org.jboss.arquillian.arquillian-bom>
     <version.wildfly>8.1.0.Final</version.wildfly>
     <version.junit>4.11</version.junit>
     <version.maven-surefire-plugin>2.17</version.maven-surefire-plugin>
