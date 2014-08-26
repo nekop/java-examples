@@ -7,6 +7,8 @@
   <!--
       Java EE 7 minimal pom.xml, works with WildFly 8.1.
 
+      https://github.com/nekop/java-examples/blob/master/maven/
+
       Put your source code, config files, boot the application server and run:
       $ mvn clean install -Parq-remote
 
