@@ -74,18 +74,18 @@
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>${version.maven-war-plugin}</version>
-          <configuration>
-            <failOnMissingWebXml>false</failOnMissingWebXml>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-ejb-plugin</artifactId>
           <version>${version.maven-ejb-plugin}</version>
           <configuration>
             <ejbVersion>3.1</ejbVersion>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${version.maven-war-plugin}</version>
+          <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
           </configuration>
         </plugin>
         <plugin>
@@ -96,14 +96,14 @@
             <finalName>ee6full</finalName>
             <version>6</version>
             <modules>
-              <webModule>
-                <groupId>${project.groupId}</groupId>
-                <artifactId>ee6full-web</artifactId>
-              </webModule>
               <ejbModule>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>ee6full-ejb</artifactId>
               </ejbModule>
+              <webModule>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ee6full-web</artifactId>
+              </webModule>
             </modules>
           </configuration>
         </plugin>
