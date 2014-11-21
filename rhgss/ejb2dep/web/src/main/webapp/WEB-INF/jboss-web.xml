@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<jboss-web version="7.2"
+   xmlns="http://java.sun.com/xml/ns/javaee"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.jboss.com/xml/ns/javaee http://www.jboss.com/xml/ns/javaee/jboss-web_7_2.xsd">
+
+  <ejb-local-ref>
+    <ejb-ref-name>ejb/EJB1LocalHome</ejb-ref-name>
+    <jndi-name>java:app/ejb2dep-ejb1-1.0/EJB1!com.redhat.gss.example.ejb2dep.ejb1.EJB1LocalHome</jndi-name>
+  </ejb-local-ref>
+
+</jboss-web>
+

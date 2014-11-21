@@ -1,0 +1,132 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.redhat.gss.example.ejb2dep</groupId>
+  <artifactId>ejb2dep</artifactId>
+  <name>ejb2dep</name>
+  <version>1.0</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <version.org.jboss.spec.jboss-javaee-6.0>3.0.2.Final</version.org.jboss.spec.jboss-javaee-6.0>
+
+    <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
+    <version.maven-ear-plugin>2.9.1</version.maven-ear-plugin>
+    <version.maven-ejb-plugin>2.4</version.maven-ejb-plugin>
+    <version.maven-war-plugin>2.4</version.maven-war-plugin>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>jboss-public</id>
+      <name>JBoss Public Maven Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+      <layout>default</layout>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>jboss-public</id>
+      <name>JBoss Public Maven Repository Group</name>
+      <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+      <layout>default</layout>
+      <releases>
+        <updatePolicy>never</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.spec</groupId>
+      <artifactId>jboss-javaee-6.0</artifactId>
+      <version>${version.org.jboss.spec.jboss-javaee-6.0}</version>
+      <type>pom</type>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>${version.maven-compiler-plugin}</version>
+          <configuration>
+            <source>1.6</source>
+            <target>1.6</target>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-ejb-plugin</artifactId>
+          <version>${version.maven-ejb-plugin}</version>
+          <configuration>
+            <ejbVersion>3.1</ejbVersion>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>${version.maven-war-plugin}</version>
+          <configuration>
+            <failOnMissingWebXml>false</failOnMissingWebXml>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-ear-plugin</artifactId>
+          <version>${version.maven-ear-plugin}</version>
+          <configuration>
+            <finalName>ejb2dep</finalName>
+            <version>6</version>
+            <modules>
+              <ejbModule>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ejb2dep-ejb1</artifactId>
+              </ejbModule>
+              <ejbModule>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ejb2dep-ejb2</artifactId>
+              </ejbModule>
+              <webModule>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>ejb2dep-web</artifactId>
+              </webModule>
+            </modules>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <modules>
+    <module>ejb2</module>
+    <module>ejb1</module>
+    <module>web</module>
+    <module>ear</module>
+  </modules>
+
+</project>
