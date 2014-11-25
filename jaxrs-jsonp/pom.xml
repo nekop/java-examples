@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <!--
-      Java EE 7 minimal pom.xml, works with WildFly 8.1.
+      Java EE 7 minimal pom.xml, works with WildFly 8.2.
 
       https://github.com/nekop/java-examples/blob/master/maven/
 
@@ -31,7 +31,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <version.org.jboss.arquillian.arquillian-bom>1.1.5.Final</version.org.jboss.arquillian.arquillian-bom>
-    <version.wildfly>8.1.0.Final</version.wildfly>
+    <version.wildfly>8.2.0.Final</version.wildfly>
     <version.junit>4.11</version.junit>
     <version.maven-surefire-plugin>2.17</version.maven-surefire-plugin>
     <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
