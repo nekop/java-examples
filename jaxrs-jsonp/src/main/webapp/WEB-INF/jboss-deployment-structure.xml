@@ -1,0 +1,7 @@
+<jboss-deployment-structure>
+  <deployment>
+    <dependencies>
+      <module name="org.jboss.resteasy.resteasy-jackson-provider" annotations="true"/>
+    </dependencies>
+  </deployment>
+</jboss-deployment-structure>
