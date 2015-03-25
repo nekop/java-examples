@@ -104,14 +104,14 @@
           <artifactId>jboss-transaction-api_1.1_spec</artifactId>
         </exclusion>
         <exclusion>
-          <groupId>org.jboss.logging</groupId>
-          <artifactId>jboss-logging</artifactId>
-        </exclusion>
-        <exclusion>
           <groupId>log4j</groupId>
           <artifactId>log4j</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.spec.javax.transaction</groupId>
+      <artifactId>jboss-transaction-api_1.1_spec</artifactId>
     </dependency>
 
     <!-- test deps -->
