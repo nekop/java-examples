@@ -1,0 +1,1 @@
+Minimal Java EE 6 examples
