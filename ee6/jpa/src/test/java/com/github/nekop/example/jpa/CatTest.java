@@ -20,7 +20,7 @@ public class CatTest {
     public static JavaArchive createDeployment() {
         return ShrinkWrap.create(JavaArchive.class)
                 .addPackage(Cat.class.getPackage())
-                .addAsManifestResource("persistence.xml", "persistence.xml")
+                .addAsManifestResource("META-INF/persistence.xml", "persistence.xml")
                 .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
     }
 
