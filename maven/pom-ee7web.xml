@@ -30,12 +30,13 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+    <version.org.jboss.arquillian.arquillian-bom>1.1.7.Final</version.org.jboss.arquillian.arquillian-bom>
     <version.org.jboss.arquillian.arquillian-bom>1.1.5.Final</version.org.jboss.arquillian.arquillian-bom>
     <version.wildfly>8.2.0.Final</version.wildfly>
-    <version.junit>4.11</version.junit>
-    <version.maven-surefire-plugin>2.17</version.maven-surefire-plugin>
-    <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
-    <version.maven-war-plugin>2.4</version.maven-war-plugin>
+    <version.junit>4.12</version.junit>
+    <version.maven-surefire-plugin>2.18.1</version.maven-surefire-plugin>
+    <version.maven-compiler-plugin>3.3</version.maven-compiler-plugin>
+    <version.maven-war-plugin>2.6</version.maven-war-plugin>
   </properties>
 
   <repositories>
